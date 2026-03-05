@@ -11,6 +11,8 @@ PDF 扫描件 → Markdown，基于 Mistral OCR API。
 
 ## 部署（新设备只做一次）
 
+### macOS / Linux
+
 ```bash
 # 1. 克隆到本地
 gh repo clone starsdaisuki/StarOCR ~/StarTools/StarOCR
@@ -24,7 +26,29 @@ echo "alias ocr='uv run ~/StarTools/StarOCR/ocr.py'" >> ~/.zshrc
 source ~/.zshrc
 ```
 
+### Windows
+
+```powershell
+# 1. 克隆到本地
+gh repo clone starsdaisuki/StarOCR $HOME\StarTools\StarOCR
+
+# 2. 设置 API Key（永久环境变量）
+[Environment]::SetEnvironmentVariable("MISTRAL_API_KEY", "你的密钥", "User")
+
+# 3. 加快捷命令（在 PowerShell 配置文件中添加函数）
+#    先确保配置文件存在
+if (!(Test-Path $PROFILE)) { New-Item $PROFILE -Force }
+#    写入函数
+Add-Content $PROFILE 'function ocr { uv run "$HOME\StarTools\StarOCR\ocr.py" @args }'
+#    重新加载
+. $PROFILE
+```
+
+> **Windows 提示**: 设置环境变量后需要重启终端才能生效。
+
 ## 使用
+
+部署完成后，macOS / Linux / Windows 用法完全一样：
 
 ```bash
 # 交互模式：一步步引导你选文件
