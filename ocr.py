@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.10"
 # dependencies = [
-#     "mistralai",
+#     "mistralai>=1.0,<2",
 #     "pymupdf",
 # ]
 # ///
