@@ -199,18 +199,18 @@ def process_one(client, path: str, output_path: str, chunk_size: int = 100):
     print(f"\n{icon} {Path(path).name}（{size_mb:.1f} MB）")
 
     if kind == "pdf":
-        if size_mb >= 50:
-            print(f"  ⚠️ 超过 50MB，启用分段模式")
+        if size_mb >= 40:
+            print(f"  ⚠️ 超过 40MB，启用分段模式（避免 multipart 开销触发 Mistral 上传上限）")
             markdown = ocr_large_pdf(client, path, chunk_size=chunk_size)
         else:
             markdown = ocr_via_upload(client, path)
     elif kind == "image":
-        if size_mb >= 40:
+        if size_mb >= 30:
             print(f"  ⚠️ 图片较大，base64 编码后可能超过 API 限制")
         markdown = ocr_image(client, path)
     elif kind == "doc":
-        if size_mb >= 50:
-            print(f"  ⚠️ 文档超过 50MB，且无法分段，可能失败")
+        if size_mb >= 40:
+            print(f"  ⚠️ 文档超过 40MB，且无法分段，可能失败")
         markdown = ocr_via_upload(client, path)
     else:
         print(f"  ❌ 不支持的格式: {ext}")
